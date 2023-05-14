@@ -14,7 +14,7 @@
   "keywords": [
     "MERN"
   ],
-  "author": "Harshit Nigam",
+  "author": "Yaman,pradhyuman",
   "license": "MIT",
   "dependencies": {
     "@sentry/node": "^6.19.7",
