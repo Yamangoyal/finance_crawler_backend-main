@@ -24,36 +24,6 @@ app.use(express.json()); // to allow posting json data
 //setting up cors
 app.use(cors());
 
-// ------------------ Sentry ----------------------
-
-const Sentry = require("@sentry/node");
-
-// Importing @sentry/tracing patches the global hub for tracing to work.
-const SentryTracing = require("@sentry/tracing");
-
-Sentry.init({
-  dsn: "https://b0e166ee11434bbe9f544e8a35576bc8@o1230295.ingest.sentry.io/6376883",
-
-  // We recommend adjusting this value in production, or using tracesSampler
-  // for finer control
-  integrations: [
-    new Sentry.Integrations.Http({ tracing: true }),
-    new SentryTracing.Integrations.Express({
-    app,
-    }),
-    ],
-    
-  tracesSampleRate: 1.0,
-});
-
-app.use(Sentry.Handlers.requestHandler());
-app.use(Sentry.Handlers.tracingHandler());
-// -------------------------------------------------
-
-// //setting up cors
-// app.use(cors());
-
-
 //users routes
 app.use("/api/users", usersRoute);
 app.get("/", (req, res) => {
