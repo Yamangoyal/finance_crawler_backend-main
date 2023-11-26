@@ -10,9 +10,9 @@ describe("register", () => {
     //success test case
     it("returns 200", async () => {
         const res = await request(app).post("/api/register").send({
-            email:"hp9@g.com",
-            firstname:"ben",
-            lastname:"ten",
+            email:"hashir@g.com",
+            firstname:"yaman",
+            lastname:"goyal",
             password:"hp123"
         });
 
@@ -22,8 +22,8 @@ describe("register", () => {
     //error test case 
     it("returns error if any info is missing", async () => {
         const res = await request(app).post("/api/register").send({
-            firstname:"ben",
-            lastname:"ten",
+            firstname:"yaman",
+            lastname:"goyal",
             password:"hp123"
         });
 
@@ -36,7 +36,7 @@ describe("login", () => {
     //true test case
     it("returns 200 if successful", async () => {
         const res = await request(app).post("/api/login").send({
-            email:"hp9@g.com",
+            email:"hashir@g.com",
             password:"hp123"
         });
 
@@ -46,7 +46,7 @@ describe("login", () => {
     // error test case 
     it("returns error if user not found", async () => {
         const res = await request(app).post("/api/login").send({
-            email:"hp9@g.com",
+            email:"hashir@g.com",
             password:"hp1"
         });
 
@@ -61,9 +61,9 @@ describe("incomeCreate", () => {
     //success test case
     it("returns 200", async () => {
         const res = await request(app).post("/api/income/create").send({
-            title:"food",
-            description:"i paid",
-            amount:500
+            title:"amazon",
+            description:"salary",
+            amount:110000
         });
 
         expect(200);
@@ -72,9 +72,9 @@ describe("incomeCreate", () => {
     //error test case 
     it("returns error if a field is missing", async () => {
         const res = await request(app).post("/api/income/create").send({
-            title:"food",
-            description:"i paid",
-            // amount:500
+            title:"amazon",
+            description:"salary",
+            // amount:110000
         });
 
         expect(500);
@@ -88,9 +88,9 @@ describe("incomeUpdate", () => {
     //success test case
     it("returns 200", async () => {
         const res = await request(app).post("/api/income/update").send({
-            title:"food",
-            description:"i paid",
-            amount:500
+            title:"amazon",
+            description:"salary",
+            amount:180000
         });
 
         expect(200);
@@ -99,9 +99,9 @@ describe("incomeUpdate", () => {
     //error test case 
     it("returns error if a field is missing", async () => {
         const res = await request(app).post("/api/income/update").send({
-            title:"food",
-            description:"i paid",
-            // amount:500
+            title:"amazon",
+            description:"salary",
+            // amount:180000
         });
 
         expect(500);
