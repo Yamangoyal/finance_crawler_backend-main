@@ -76,6 +76,7 @@ const fetchSingleWithoutPagination = expressAsyncHandler(async (req, res) => {
 //update
 const updateIncome = expressAsyncHandler(async (req, res) => {
   const { id } = req?.params;
+  console.log(req.params);
   const { title, description, amount } = req?.body;
   try {
     const inc = await income.findByIdAndUpdate(

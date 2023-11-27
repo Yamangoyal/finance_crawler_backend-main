@@ -1,15 +1,20 @@
 const app = require("../src/app");
 const request = require("supertest");
+// const jest = require("jest");
 
-beforeEach(async () => {
-	// Increasing timeout otherwise sometimes a timeout error can wreck the whole testing phase
-  jest.setTimeout(50000) 
-})
+beforeEach(() => {
+    // timeout of 1 min added so that jest
+    // don't exits before DB connection get established
+    jest.setTimeout(60000);
+});
+
+const token =  "Bearer :eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NjQ1OTBjNWM1NDRjMDU3NWJiMWZkNiIsImlhdCI6MTcwMTA3NTczMywiZXhwIjoxNzAyODAzNzMzfQ.O7634JX-tM9l_9NHlLiwj657OvEbdYLtXdeWP0rQfRM";
 
 describe("register", () => {
     //success test case
     it("returns 200", async () => {
-        const res = await request(app).post("/api/register").send({
+        jest.setTimeout(500000);
+        const res = await request(app).post("/api/users/register").send({
             email:"hashir@g.com",
             firstname:"yaman",
             lastname:"goyal",
@@ -21,7 +26,7 @@ describe("register", () => {
 
     //error test case 
     it("returns error if any info is missing", async () => {
-        const res = await request(app).post("/api/register").send({
+        const res = await request(app).post("/api/users/register").send({
             firstname:"yaman",
             lastname:"goyal",
             password:"hp123"
@@ -35,7 +40,7 @@ describe("register", () => {
 describe("login", () => {
     //true test case
     it("returns 200 if successful", async () => {
-        const res = await request(app).post("/api/login").send({
+        const res = await request(app).post("/api/users/login").send({
             email:"hashir@g.com",
             password:"hp123"
         });
@@ -45,7 +50,7 @@ describe("login", () => {
 
     // error test case 
     it("returns error if user not found", async () => {
-        const res = await request(app).post("/api/login").send({
+        const res = await request(app).post("/api/users/login").send({
             email:"hashir@g.com",
             password:"hp1"
         });
@@ -60,10 +65,10 @@ describe("login", () => {
 describe("incomeCreate", () => {
     //success test case
     it("returns 200", async () => {
-        const res = await request(app).post("/api/income/create").send({
-            title:"amazon",
-            description:"salary",
-            amount:110000
+        const res = await request(app).post("/api/income/").set("authorization",token).send({
+            title:"samosa",
+            description:"thela",
+            amount:100
         });
 
         expect(200);
@@ -71,10 +76,10 @@ describe("incomeCreate", () => {
 
     //error test case 
     it("returns error if a field is missing", async () => {
-        const res = await request(app).post("/api/income/create").send({
-            title:"amazon",
-            description:"salary",
-            // amount:110000
+        const res = await request(app).post("/api/income/").set("authorization",token).send({
+            title:"samosa",
+            description:"thela",
+            // amount:100
         });
 
         expect(500);
@@ -87,7 +92,7 @@ describe("incomeCreate", () => {
 describe("incomeUpdate", () => {
     //success test case
     it("returns 200", async () => {
-        const res = await request(app).post("/api/income/update").send({
+        const res = await request(app).put("/api/income/656462d29351cbd17a07ef3c/update").set("authorization",token).send({
             title:"amazon",
             description:"salary",
             amount:180000
@@ -98,7 +103,7 @@ describe("incomeUpdate", () => {
 
     //error test case 
     it("returns error if a field is missing", async () => {
-        const res = await request(app).post("/api/income/update").send({
+        const res = await request(app).put("/api/income/656462d29351cbd17a07ef3c/update").set("authorization",token).send({
             title:"amazon",
             description:"salary",
             // amount:180000
@@ -114,9 +119,9 @@ describe("incomeUpdate", () => {
 describe("incomeFetch", () => {
     //success test case
     it("returns 200", async () => {
-        const res = await request(app).get("/api/income/fetchSingle").send({
-            page:1,
-            id:"625d6949b2cbc34f5fd3505d"
+        const res = await request(app).get("/api/income/6564590c5c544c0575bb1fd6?page=1").set("authorization",token).send({
+            // page:1,
+            // id:"656462d29351cbd17a07ef3c"
         });
 
         expect(200);
@@ -124,9 +129,9 @@ describe("incomeFetch", () => {
 
     //error test case 
     it("returns error if a field is missing", async () => {
-        const res = await request(app).get("/api/income/fetchSingle").send({
-            page:1,
-            // id:"625d6949b2cbc34f5fd3505d"
+        const res = await request(app).get("/api/income/6564590c5c544c0575bb1fd6?page=1").set("authorization",token).send({
+            // page:1,
+            // id:"656462d29351cbd17a07ef3c"
         });
 
         expect(500);
